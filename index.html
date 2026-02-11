@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainability Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌍 Sustainability Predictor</h1>
+            <p class="subtitle">Predict city sustainability based on environmental metrics</p>
+        </header>
+
+        <main>
+            <!-- Single Prediction Tab -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('single')">Single Prediction</button>
+                <button class="tab-btn" onclick="switchTab('batch')">Batch Prediction</button>
+            </div>
+
+            <!-- Single Prediction Form -->
+            <div id="single" class="tab-content active">
+                <form id="singleForm" class="form">
+                    <div class="form-group">
+                        <label for="cityName">City Name *</label>
+                        <input type="text" id="cityName" name="cityName" required placeholder="e.g., New York">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country">Country *</label>
+                        <input type="text" id="country" name="country" required placeholder="e.g., USA">
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="form-group">
+                            <label for="urbanPopulation">Urban Population (Millions) *</label>
+                            <input type="number" id="urbanPopulation" name="urbanPopulation" required min="0" placeholder="e.g., 10.5" step="0.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="populationGrowth">Population Growth Rate (%) *</label>
+                            <input type="number" id="populationGrowth" name="populationGrowth" required min="0" max="100" placeholder="0-100" step="0.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="greenSpace">Green Space (%) *</label>
+                            <input type="number" id="greenSpace" name="greenSpace" required min="0" max="100" placeholder="0-100" step="0.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="airQuality">Air Quality (PM2.5) *</label>
+                            <input type="number" id="airQuality" name="airQuality" required min="0" placeholder="µg/m³" step="0.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="co2Emissions">CO2 Emissions (per capita) *</label>
+                            <input type="number" id="co2Emissions" name="co2Emissions" required min="0" placeholder="tons/year" step="0.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cleanWater">Clean Water Access (%) *</label>
+                            <input type="number" id="cleanWater" name="cleanWater" required min="0" max="100" placeholder="0-100" step="0.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="wasteRecycling">Waste Recycling Rate (%) *</label>
+                            <input type="number" id="wasteRecycling" name="wasteRecycling" required min="0" max="100" placeholder="0-100" step="0.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="publicTransport">Public Transport (%) *</label>
+                            <input type="number" id="publicTransport" name="publicTransport" required min="0" max="100" placeholder="0-100" step="0.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="energyConsumption">Energy Consumption (kWh per capita) *</label>
+                            <input type="number" id="energyConsumption" name="energyConsumption" required min="0" placeholder="e.g., 1000" step="0.1">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Predict Sustainability</button>
+                </form>
+
+                <!-- Result Card -->
+                <div id="resultCard" class="result-card hidden">
+                    <div id="resultHeader" class="result-header"></div>
+                    <div id="resultDetails" class="result-details"></div>
+                </div>
+            </div>
+
+            <!-- Batch Prediction Tab -->
+            <div id="batch" class="tab-content">
+                <div class="batch-section">
+                    <h2>Batch Prediction</h2>
+                    <p class="info-text">Upload a CSV file with the following columns: city_name, country, urban_population, population_growth, green_space, air_quality, co2_emissions, clean_water, waste_recycling, public_transport, energy_consumption</p>
+                    
+                    <div class="file-upload">
+                        <input type="file" id="csvFile" accept=".csv" />
+                        <label for="csvFile" class="file-label">Choose CSV File</label>
+                    </div>
+
+                    <div style="margin: 20px 0; display: flex; gap: 10px;">
+                        <button onclick="processBatchFile()" class="btn btn-primary">Process File</button>
+                        <button onclick="downloadSampleCSV()" class="btn btn-secondary">Download Sample CSV</button>
+                    </div>
+
+                    <div id="batchResults" class="batch-results hidden">
+                        <h3>Prediction Results</h3>
+                        <div id="resultsTable"></div>
+                        <button onclick="downloadResults()" class="btn btn-secondary">Download Results</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Sustainability Prediction System | Powered by Machine Learning</p>
+        </footer>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="spinner hidden"></div>
+
+    <!-- Error Toast -->
+    <div id="errorToast" class="toast error hidden"></div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="toast success hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
